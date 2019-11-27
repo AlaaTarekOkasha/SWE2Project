@@ -1,0 +1,13 @@
+Car
+1
+Dokki
+
+Camira
+30
+Haram
+Camira
+25
+Haram
+Camira
+10
+Giza

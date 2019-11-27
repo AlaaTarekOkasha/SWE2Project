@@ -14,6 +14,8 @@ public class Product implements ValidateProduct, ValidateBrand
  private String serialNo;
  private String brandtName;
  private String brandCategory;
+ private String offer;
+ private String amount;
  
  public Product(){}
  
@@ -37,6 +39,18 @@ public class Product implements ValidateProduct, ValidateBrand
  
  public void setBrandCategory(String brandCategory)
  {this.brandCategory = brandCategory;}
+ 
+ public void setOffer(String offer)
+ {this.offer = offer;}
+ 
+ public void setAmount(String amount)
+ {this.amount = amount;}
+ 
+ public String getAmount()
+ {return this.amount;}
+ 
+ public String getOffer()
+ {return this.offer;}
  
  public String getProductName()
  {return this.productName;}
@@ -105,13 +119,15 @@ public class Product implements ValidateProduct, ValidateBrand
   return check;
  }
  
- public void addProduct (String productName , String productCategory , String productType , String priceRange , String serialNo) throws IOException
+ public void addProduct (String productName , String productCategory , String productType , String priceRange , String serialNo, String offer, String amount) throws IOException
  {
   this.setProductName(productName); 
   this.setProductCategory(productCategory);
   this.setProductType(productType);
   this.setPriceRange(priceRange);
   this.setSerialNumber(serialNo);
+  this.setOffer(offer);
+  this.setAmount(amount);
   boolean check = validateProduct (serialNo);
   if (check == false)
   {  
@@ -128,6 +144,16 @@ public class Product implements ValidateProduct, ValidateBrand
    fWrite.newLine();
    fWrite.write(this.getSerialNumber());
    fWrite.close();	  
+   FileWriter fw1 = new FileWriter("Offers.txt",true);
+   BufferedWriter fWrite1 = new BufferedWriter(fw1);
+   fWrite1.newLine();
+   fWrite1.write(this.getOffer());
+   fWrite1.close();	 
+   FileWriter fw3=new FileWriter("amount.txt",true);
+   BufferedWriter fWrite3 = new BufferedWriter(fw3);
+   fWrite3.newLine();
+   fWrite3.write(this.getAmount());
+   fWrite3.close();
    System.out.println("The Product is added Successfully");
   }
  else

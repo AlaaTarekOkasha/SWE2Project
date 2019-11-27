@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 import java.io.IOException;
 
@@ -80,6 +79,19 @@ public class StoreOwner extends User implements Validate , Registration
  @Override
  public void Register(String name , String email , String mobile , String password) throws IOException
  {	 
+  int numberOfAccounts = 0;
+  FileReader read = new FileReader("StoreOwnerACCs.txt");
+  BufferedReader file1 = null; 
+  file1 = new BufferedReader(read);
+  String line2 = file1.readLine();
+  file1.close();
+  numberOfAccounts = Integer.parseInt(line2);
+  numberOfAccounts++;
+  line2 = Integer.toString(numberOfAccounts);
+  FileWriter w =new FileWriter("StoreOwnerACCs.txt");
+  BufferedWriter Write = new BufferedWriter(w);
+  Write.write(line2);
+  Write.close();
   this.setEmail(email); this.setPassword(password); this.setName(name); this.setMobile(mobile);
   FileReader reader = new FileReader("StoreOwnerData.txt"); 	 
   BufferedReader file = null; 

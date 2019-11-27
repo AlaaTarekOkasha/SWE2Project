@@ -5,7 +5,7 @@ public class Main
  public static void main(String[] args) throws IOException, InterruptedException
  {
   String iD, email, password, mobile, name;
-  String productName, brandName, brandCategory,productCategory, priceRange, productType, serialNo, storeName, storeLocation, storeType;
+  String productName, brandName, brandCategory,productCategory, priceRange, productType, serialNo, storeName, storeLocation, storeType, offer, amount, shippingAddress;
   String userType,adminActions,ownerActions,buyerActions,onlineAdminActions;
   Scanner scan = new Scanner(System.in);
   User admin = new Administrator(); 
@@ -29,7 +29,6 @@ public class Main
   {
   switch (userType)	 
   {
-  //if (userType.equals("A"))
   case("A"): 
   {
    System.out.println("Enter Your ID and Password");
@@ -37,12 +36,13 @@ public class Main
    admin.Login(iD , password);
    System.out.println("Enter 1 to add new Product to the System");
    System.out.println("Enter 4 to add new Brand to the System");
+   System.out.println("Enter 9 to see the statistics of the system");
    adminActions = scan.next();
    if (adminActions.equals("1"))
    { 
-	System.out.println("Enter the Product Name,Category,Type,Price and Serial Number Respectively");
-	productName = scan.next(); productCategory = scan.next(); priceRange = scan.next(); productType = scan.next(); serialNo = scan.next();
-    adminPro.AddProductToSystem(productName, productCategory, productType, priceRange, serialNo);
+	System.out.println("Enter the Product Name,Category,Type,Price, Serial Number, (Offer or No Offer) and Amount Respectively");
+	productName = scan.next(); productCategory = scan.next(); priceRange = scan.next(); productType = scan.next(); serialNo = scan.next(); offer = scan.next(); amount = scan.next();
+    adminPro.AddProductToSystem(productName, productCategory, productType, priceRange, serialNo, offer, amount);
    }
    else if (adminActions.equals("4"))
    {
@@ -50,7 +50,11 @@ public class Main
 	brandName = scan.next();
 	brandCategory = scan.next();
 	adminPro.AddBrandsToSystem(brandName, brandCategory);
-	}
+   }
+   else if (adminActions.equals("9"))
+   {
+	adminPro.adminStatisics();
+   }
    break;
   }
   //else if (userType.equals("S"))
@@ -107,11 +111,19 @@ public class Main
    System.out.println("Enter Your Email and Password");
    email = scan.next(); password = scan.next();
    buyer.Login(email , password); 
-   System.out.println("Enter 3 to Display the Whole Products");
+   System.out.println("Enter 0 to Display the Whole Products or 1 to Buy Product");
    buyerActions = scan.next();
-   if(buyerActions.equals("3")) 
+   if(buyerActions.equals("0")) 
    {
    buyerRegist.viewProduct();
+   }
+   else if (buyerActions.equals("1"))
+   {
+	System.out.println("Enter The Product Name, Amount and Shiiping Address respectively");   
+	productName = scan.next(); 
+	amount = scan.next();
+	shippingAddress = scan.next();
+	buyerRegist.buyProducts(productName, amount, shippingAddress);
    }
    break;
   }
