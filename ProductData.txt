@@ -43,3 +43,13 @@ Parson
 400
 Normal
 9
+HairCare
+HairCare
+50
+Normal
+10
+Things
+Things
+300
+Normal
+11

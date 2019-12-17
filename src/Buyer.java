@@ -9,7 +9,8 @@ import java.io.LineNumberReader;
 public class Buyer extends User implements Validate , Registration
 {
  private String name;
- private String mobile;	
+ private String mobile;
+ private BuyProduct buyProduct;
  public Buyer(){}
 
  public void setName(String name) 
@@ -142,62 +143,8 @@ public class Buyer extends User implements Validate , Registration
   }
  } 
  
- public void buyProducts(String productName, String amount, String shippingAddress) throws IOException 
- { 
-  FileReader read1 = new FileReader("ProductData.txt");
-  BufferedReader file1 = null; 
-  file1 = new BufferedReader(read1);
-  String line1 = file1.readLine();
-  ArrayList<String> buyProducts = new ArrayList<>();
-  while(line1 != null)
-  {
-   buyProducts.add(line1);
-   line1= file1.readLine(); 
-  } 
-  file1.close();
-  FileReader read = new FileReader("amount.txt");
-  BufferedReader file = null; 
-  file = new BufferedReader(read);
-  String line = file.readLine();
-  ArrayList<String> amountFile = new ArrayList<>();
-  while(line != null)
-  {
-  amountFile.add(line);
-  line= file.readLine(); 
-  } 
-  file.close();
-  int j=0;
-  for (int i =0; i<buyProducts.size(); i=i+5)
-  {	  
-    if (productName.equals(buyProducts.get(i)) && Integer.parseInt(amount) <= Integer.parseInt(amountFile.get(j)))
-    {
-     FileWriter fw=new FileWriter("BuyProducts.txt",true);
-     BufferedWriter fWrite = new BufferedWriter(fw);
-     fWrite.newLine();
-     fWrite.write(productName);
-     fWrite.newLine();
-     fWrite.write(amount);
-     fWrite.newLine();
-     fWrite.write(shippingAddress);
-     fWrite.close();  
-     int newAmount = Integer.parseInt(amountFile.get(i)) - Integer.parseInt(amount);
-     String amountt = Integer.toString(newAmount);
-     amountFile.set(i, amountt);
-     fw = new FileWriter("amount.txt");
-     fWrite = new BufferedWriter(fw);
-     for(int k=0; k<amountFile.size(); k++)
-     {
-      fWrite.write(amountFile.get(k));
-      fWrite.newLine();
-     }
-     fWrite.close(); 
-     System.out.println("The Receipt of your Product is:"); 
-     System.out.println("The Product's Name: "+productName+" The Product's Amount: "+amount+" The Shipping Address: "+shippingAddress);
-     System.exit(1);
-    }
-    else {System.out.println("The Product is not found in the system :(");  System.exit(1);}
-    j++;
-  }
+ public void buyProductsBuyer(String productName, String amount, String shippingAddress, String checkEmail) throws IOException {
+  	 buyProduct = new BuyProduct();
+  	 buyProduct.buyProducts(productName, amount, shippingAddress, "Buyer", checkEmail);
  }
- 
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Administrator extends User implements Validate
 {	
  Product product;	
+ ValidateLoginAdmin v;
  public Administrator(){}
  
  public void setID(String iD) 
@@ -20,16 +21,17 @@ public class Administrator extends User implements Validate
  public String getPassword()
  {return this.password;}
  
- @Override
- public boolean validate(String iD , String password)
+
+ public boolean validate(String iD , String password) throws IOException
  {
-  if (iD.equals("Admin") && password.equals("20175020"))
-  {return true;}
-  else return false;
+  boolean check;
+  v = new ValidateLoginAdmin();
+  check = v.validate(iD, password);
+  return check;
  }
  
  @Override
- public void Login(String iD , String password)
+ public void Login(String iD , String password) throws IOException
  {
   this.setID(iD); this.setPassword(password);
   boolean check = validate(this.getID() ,this.getPassword());
@@ -39,10 +41,10 @@ public class Administrator extends User implements Validate
   {System.out.println("Your data is not valid :("); System.exit(1);}
  }
  
- public void AddProductToSystem (String productName , String productCategory , String productType , String priceRange , String serialNo, String offer, String amount) throws IOException
+ public void AddProductToSystem (Product p) throws IOException
  {
-  product = new Product();
-  product.addProduct(productName, productCategory, productType, priceRange, serialNo, offer, amount);
+  product = new Product();	 
+  product.addProduct(p);
  }
  
  public void AddBrandsToSystem (String brandName, String brandCategory) throws IOException

@@ -16,6 +16,8 @@ public class Product implements ValidateProduct, ValidateBrand
  private String brandCategory;
  private String offer;
  private String amount;
+ private Writer write;
+ private Reader read;
  
  public Product(){}
  
@@ -119,41 +121,18 @@ public class Product implements ValidateProduct, ValidateBrand
   return check;
  }
  
- public void addProduct (String productName , String productCategory , String productType , String priceRange , String serialNo, String offer, String amount) throws IOException
+ public void addProduct (Product p) throws IOException
  {
-  this.setProductName(productName); 
-  this.setProductCategory(productCategory);
-  this.setProductType(productType);
-  this.setPriceRange(priceRange);
-  this.setSerialNumber(serialNo);
-  this.setOffer(offer);
-  this.setAmount(amount);
   boolean check = validateProduct (serialNo);
   if (check == false)
-  {  
-   FileWriter fw=new FileWriter("ProductData.txt",true);
-   BufferedWriter fWrite = new BufferedWriter(fw);
-   fWrite.newLine();
-   fWrite.write(this.getProductName());
-   fWrite.newLine();
-   fWrite.write(this.getProductCategory());
-   fWrite.newLine();
-   fWrite.write(this.getProductType());
-   fWrite.newLine();
-   fWrite.write(this.getPriceRange());
-   fWrite.newLine();
-   fWrite.write(this.getSerialNumber());
-   fWrite.close();	  
-   FileWriter fw1 = new FileWriter("Offers.txt",true);
-   BufferedWriter fWrite1 = new BufferedWriter(fw1);
-   fWrite1.newLine();
-   fWrite1.write(this.getOffer());
-   fWrite1.close();	 
-   FileWriter fw3=new FileWriter("amount.txt",true);
-   BufferedWriter fWrite3 = new BufferedWriter(fw3);
-   fWrite3.newLine();
-   fWrite3.write(this.getAmount());
-   fWrite3.close();
+  {  write = new Writer();
+   write.write(p.getProductCategory(), "ProductData.txt");	  
+   write.write(p.getProductCategory(), "ProductData.txt");	  
+   write.write(p.getProductType(), "ProductData.txt");	  
+   write.write(p.getPriceRange(), "ProductData.txt");	  
+   write.write(p.getSerialNumber(), "ProductData.txt");
+   write.write(p.getOffer(), "Offers.txt");	  	 
+   write.write(p.getAmount(), "amount.txt");	  
    System.out.println("The Product is added Successfully");
   }
  else

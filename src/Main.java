@@ -12,14 +12,17 @@ public class Main
   User owner = new StoreOwner();
   User buyer = new Buyer();
   User onlineAdmin = new OnlineStoreAdmin();
+  Collabrator collabrator = new Collabrator();
   Administrator adminPro = new Administrator();
   StoreOwner ownerRegist = new StoreOwner();
   Buyer buyerRegist = new Buyer();
   OnlineStoreAdmin onlineStoreAdmin = new OnlineStoreAdmin();
   Store s = new Store();
+  Product p;
   System.out.println("Enter A to log in as an Administrator");
   System.out.println("Enter S to log in as a Store Owner");
   System.out.println("Enter B to log in as a a Buyer");
+  System.out.println("Enter C to log in as a a Collabrator");
   System.out.println("Enter SR to Regist as a Store Owner");
   System.out.println("Enter BR to Regist as a Buyer");
   System.out.println("Enter OA to Regist as an OnlineStoreAdmin");
@@ -42,7 +45,15 @@ public class Main
    { 
 	System.out.println("Enter the Product Name,Category,Type,Price, Serial Number, (Offer or No Offer) and Amount Respectively");
 	productName = scan.next(); productCategory = scan.next(); priceRange = scan.next(); productType = scan.next(); serialNo = scan.next(); offer = scan.next(); amount = scan.next();
-    adminPro.AddProductToSystem(productName, productCategory, productType, priceRange, serialNo, offer, amount);
+	p = new Product();
+	p.setProductName(productName); 
+    p.setProductCategory(productCategory);
+    p.setProductType(productType);
+    p.setPriceRange(priceRange);
+    p.setSerialNumber(serialNo);
+    p.setOffer(offer);
+    p.setAmount(amount);
+    adminPro.AddProductToSystem(p);
    }
    else if (adminActions.equals("4"))
    {
@@ -66,6 +77,8 @@ public class Main
    System.out.println("Enter 2 to add new Product to the system");
    System.out.println("Enter 7 to add new Store to the system");
    System.out.println("Enter 8 to Display the Report of the Store Product");
+   System.out.println("Enter 9 to Add New Collabrator");
+   System.out.println("Enter 10 to Buy Product");
    ownerActions = scan.next();
    if (ownerActions.equals("2"))
    {
@@ -103,6 +116,21 @@ public class Main
    {
 	ownerRegist.Report();  
    }
+   else if (ownerActions.equals("9"))
+   {
+	System.out.println("Enter Your Name, Email, Mobile and Password respectively");
+	name = scan.next(); email = scan.next(); mobile = scan.next(); password = scan.next();   
+	ownerRegist.AddCollabrator(name, email, mobile, password); 
+	System.out.println("Your Collabrator Added Successfully");
+   }
+   else if (ownerActions.equals("10"))
+   {
+	System.out.println("Enter The Product Name, Amount and Shiiping Address respectively");   
+	productName = scan.next(); 
+	amount = scan.next();
+	shippingAddress = scan.next();
+	ownerRegist.buyProductsBuyer(productName, amount, shippingAddress, email);
+   }
    break;
   }
   //else if (userType.equals("B"))
@@ -123,9 +151,54 @@ public class Main
 	productName = scan.next(); 
 	amount = scan.next();
 	shippingAddress = scan.next();
-	buyerRegist.buyProducts(productName, amount, shippingAddress);
+	buyerRegist.buyProductsBuyer(productName, amount, shippingAddress, email);
    }
    break;
+  }
+  case("C"):
+  {
+   System.out.println("Enter Your Email and Password");
+   email = scan.next(); password = scan.next();
+   collabrator.Login(email , password);  
+   System.out.println("Enter 1 to add new Product to the system");
+   System.out.println("Enter 2 to add new Store to the system");
+   System.out.println("Enter 3 to Display the Report of the Store Product");
+   ownerActions = scan.next();
+   if (ownerActions.equals("1"))
+   {
+	System.out.println("Enter the Serial Number, Brand Name and Brand Category of the product you want to add");  
+	serialNo = scan.next(); 
+	brandName = scan.next();
+    brandCategory = scan.next();
+    collabrator.AddProductToStore(serialNo , brandName, brandCategory);
+   }
+   else if (ownerActions.equals("2"))
+   {
+	System.out.println("Enter 1 to add Onsite Stores"); 
+	System.out.println("Enter 2 to add Online Stores"); 
+	ownerActions = scan.next();
+    if(ownerActions.equals("1"))
+    {
+     System.out.println("Enter Store Name with .txt, Location, Type Respectively"); 	
+     storeName = scan.next();
+     storeLocation = scan.next();
+     storeType = scan.next();
+     collabrator.AddStore(storeName, storeLocation, storeType);
+	}
+    else if(ownerActions.equals("2"))
+    {
+     System.out.println("Enter Store Name with .txt, Location, Type Respectively"); 	
+     storeName = scan.next();
+     storeLocation = scan.next();
+     storeType = scan.next();
+     collabrator.AddStore(storeName, storeLocation, storeType);
+    }
+   }
+   else if (ownerActions.equals("3"))
+   {
+	collabrator.Report();  
+   }	  
+   break;	  
   }
   //else if (userType.equals("SR"))
   case("SR"):
@@ -164,6 +237,7 @@ public class Main
   System.out.println("Enter A to log in as an Administrator");
   System.out.println("Enter S to log in as a Store Owner");
   System.out.println("Enter B to log in as a a Buyer");
+  System.out.println("Enter C to log in as a a Collabrator");
   System.out.println("Enter SR to Regist as a Store Owner");
   System.out.println("Enter BR to Regist as a a Buyer");
   System.out.println("Enter OA to Regist as an OnlineStoreAdmin");

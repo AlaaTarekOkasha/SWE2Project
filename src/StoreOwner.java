@@ -16,6 +16,8 @@ public class StoreOwner extends User implements Validate , Registration
  static int numberOfUserBuy=0;
  Product product;
  Store store;
+ Collabrator collabrator;
+ BuyProduct buyProduct;
  public StoreOwner(){}
 	
  public void setName(String name) 
@@ -221,5 +223,15 @@ public class StoreOwner extends User implements Validate , Registration
  {
   store = new Store();
   store.newStore(storeName, storeLocation, storeType);
+ }
+ 
+ public void AddCollabrator(String name , String email , String mobile , String password) throws IOException {
+	collabrator = new Collabrator();
+	collabrator.Register(name, email, mobile, password);
+ }
+ 
+ public void buyProductsBuyer(String productName, String amount, String shippingAddress, String checkEmail) throws IOException {
+  	 buyProduct = new BuyProduct();
+  	 buyProduct.buyProducts(productName, amount, shippingAddress, "StoreOwner", checkEmail);
  }
 }
